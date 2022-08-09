@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:todoapp/database/database.dart';
+import 'package:todoapp/screens/todo/controllers/todoController.dart';
+import 'package:todoapp/screens/todo/todo.dart';
 // import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 Future<void> main() async {
   // sqfliteFfiInit();
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
     // Databases.deleteTodo();
     Databases.insertToDo(todo_title: "ifeoma",todo_description:" fine girl",todo_date: "15 june",todo_time: "12am");
     Databases. selctToDo();
-    return MultiProvider(providers: [ChangeNotifierProvider(create:(context) => ,)],
+    return MultiProvider(providers: [ChangeNotifierProvider.value(value: TodoController()),],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -35,9 +37,9 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.purple,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const Todo(),
 
         builder: (context, child) => ResponsiveWrapper.builder(
             child,
