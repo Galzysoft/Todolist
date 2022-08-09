@@ -49,30 +49,55 @@ class Databases {
   static Future<void> insertToDo() async {
 // statement method  insert values right inside the sql statement
 //    insert into tablename (col1,col2,col3)  values(val1,val2,val3);
-try{
-    DB?.execute(
-        '''INSERT INTO ${Db_c.todoTable} (${Db_c.todo_title}, ${Db_c.todo_description}, ${Db_c.todo_date}, ${Db_c.todo_time}) values(?,?,?,?)''',
-        ["london",
-          "a stupid place",
-          "2022,10,4",
-          "1:00 pm"
-        ]
-    ).whenComplete(() {
-      print("DONE INSERTING ");
-      selctToDo();
-    });
+    try {
+      DB?.execute(
+          '''INSERT INTO ${Db_c.todoTable} (${Db_c.todo_title}, ${Db_c.todo_description}, ${Db_c.todo_date}, ${Db_c.todo_time}) values(?,?,?,?)''',
+          ["aba", "a good place", "2022,10,4", "1:00 pm"]).whenComplete(() {
+        print("DONE INSERTED ");
+        selctToDo();
+      });
+    } on Exception catch (e) {
+      print("ERROR INSERTING $e");
+    }
+  }
 
-}on Exception catch(e){
-  print("ERROR INSERTING $e");
+  static Future<void> updateTodoa() async{
+    try {
+   await  DB?.execute("UPDATE ${Db_c.todoTable} Set ${Db_c.todo_description} = ? WHERE ${Db_c.todo_title}= ?",["am happy","aba"]);
+   print("updated successfully");
+   selctToDo();
+    }
+        on Exception catch (e){
+      print("not updated");
+
+        }
+
+
+  }
+
+static Future<void> deleteTodo() async{
+
+    try {
+     await DB?.execute(" DELETE FROM ${Db_c.todoTable} WHERE ${Db_c.todo_title} = ? ",["aba"]);
+      print("file deleted ");
+    } on Exception catch (e) {
+      print("delete failed $e");
+      // TODO
+    }
 }
 
-  }
+
+
+
   static Future<void> selctToDo() async{
     var Result= await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable}");
+    // var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_description} = ? ",["a good place"]);
+    // var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_description} LIKE ? ",["%good%"]);
+    // var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_description} LIKE ? OR ${Db_c.todo_title} LIKE ?",["%good%","%london%"]);
     if(Result.length==0){
       print("empty ");
-    } else{print("Result is not empty  $Result");}
-
+    } else {
+      print("Result is not empty  $Result");
+    }
   }
-
 }
