@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:todoapp/database/database.dart';
@@ -6,7 +7,7 @@ import 'package:todoapp/database/database.dart';
 Future<void> main() async {
   // sqfliteFfiInit();
   WidgetsFlutterBinding.ensureInitialized();
-  await Databases.dbconnector2().whenComplete(() => Databases.insertToDo());
+  await Databases.dbconnector2();
 
   runApp(const MyApp());
 
@@ -18,37 +19,40 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Databases.deleteTodo();
-    Databases.selctToDo();
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    // Databases.deleteTodo();
+    Databases.insertToDo(todo_title: "ifeoma",todo_description:" fine girl",todo_date: "15 june",todo_time: "12am");
+    Databases. selctToDo();
+    return MultiProvider(providers: [ChangeNotifierProvider(create:(context) => ,)],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+        builder: (context, child) => ResponsiveWrapper.builder(
+            child,
+            maxWidth: 1200,
+            minWidth: 480,
+            defaultScale: true,
+            breakpoints: [
+              ResponsiveBreakpoint.resize(480, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+            ],
+            background: Container(color: Color(0xFFF5F5F5))),
+        initialRoute: "/",
+
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-
-      builder: (context, child) => ResponsiveWrapper.builder(
-          child,
-          maxWidth: 1200,
-          minWidth: 480,
-          defaultScale: true,
-          breakpoints: [
-            ResponsiveBreakpoint.resize(480, name: MOBILE),
-            ResponsiveBreakpoint.autoScale(800, name: TABLET),
-            ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-          ],
-          background: Container(color: Color(0xFFF5F5F5))),
-      initialRoute: "/",
-
     );
   }
 }
