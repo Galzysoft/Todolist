@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 // import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:todoapp/database/database.dart';
+import 'package:todoapp/screens/create_todo/controllers/createTodoController.dart';
 import 'package:todoapp/screens/todo/controllers/todoController.dart';
 import 'package:todoapp/screens/todo/todo.dart';
 // import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
@@ -22,9 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Databases.deleteTodo();
-    Databases.insertToDo(todo_title: "ifeoma",todo_description:" fine girl",todo_date: "15 june",todo_time: "12am");
-    Databases. selctToDo();
-    return MultiProvider(providers: [ChangeNotifierProvider.value(value: TodoController()),],
+
+    return MultiProvider(providers: [ChangeNotifierProvider.value(value: TodoController()),
+      ChangeNotifierProvider.value(value: CreateTodoController()),],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

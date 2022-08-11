@@ -47,7 +47,7 @@ class TodoCard extends StatelessWidget {
                     color: Colors.purple,
                   ),
                   title: Text(
-                   snapshot.title,
+                   snapshot.title.toString(),
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
                   ),
                   subtitle: Row(children: [
@@ -58,7 +58,7 @@ class TodoCard extends StatelessWidget {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(snapshot.date,
+                    Text(snapshot.date.toString(),
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w400))
                   ]),
@@ -82,7 +82,7 @@ class TodoCard extends StatelessWidget {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text(snapshot.time,
+                                  Text(snapshot.time.toString(),
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w400))

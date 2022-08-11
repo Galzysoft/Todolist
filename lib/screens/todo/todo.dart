@@ -13,11 +13,13 @@ class Todo extends StatefulWidget {
 }
 
 class _TodoState extends State<Todo> {
-  var _future;
+
 
   @override
-  InitState() {
-    _future = Databases.selctToDo();
+  initState() {
+    print("ada");
+
+    super.initState();
   }
 
   @override
@@ -73,6 +75,8 @@ class _TodoState extends State<Todo> {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.search),
+
+
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20)),
@@ -94,9 +98,9 @@ class _TodoState extends State<Todo> {
         ),
       ),
       body: FutureBuilder<List<TodoModel>>(
-          future: _future,
+          future: providerListenTrue.future,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData && snapshot.data!.length!=0) {
               return ListView.separated(
                   itemBuilder: (context, index) {
                     return TodoCard(
@@ -110,7 +114,7 @@ class _TodoState extends State<Todo> {
                   },
                   itemCount: snapshot.data!.length);
             } else {
-              return CircularProgressIndicator(color: Colors.purple);
+              return Center(child: CircularProgressIndicator(color: Colors.purple));
             }
           }),
     );

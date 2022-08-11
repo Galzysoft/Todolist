@@ -54,6 +54,7 @@ class Databases {
       required String todo_time}) async {
 // statement method  insert values right inside the sql statement
 //    insert into tablename (col1,col2,col3)  values(val1,val2,val3);
+  print("my title $todo_title");
     try {
       DB?.execute(
           '''INSERT INTO ${Db_c.todoTable} (${Db_c.todo_title},${Db_c.todo_description}, ${Db_c.todo_date}, ${Db_c.todo_time}) values(?,?,?,?)''',
@@ -97,7 +98,7 @@ class Databases {
   }
 
   static Future<List<TodoModel>> selctToDo() async {
-    // var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable}");
+    var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable}");
   ///  select statement with a condition
   //   var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_title} = ? ",["onyeka"]);
     String v="onyeka";
@@ -105,7 +106,7 @@ class Databases {
     // var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_title} = $v");
 /// these is been used to perform search  querying of any appearance of  such values
 //     var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_title} LIKE ? ",["%o%"]);
-    var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_description} LIKE ? OR ${Db_c.todo_title} LIKE ? ",["%good%","%london%"]);
+//     var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_description} LIKE ? OR ${Db_c.todo_title} LIKE ? ",["%good%","%london%"]);
 
     if (Result.length != 0) {
 
@@ -122,7 +123,7 @@ class Databases {
 
       }
 
-      print("Result is not empty  ${todoList[1].description}");
+      print("Result is not empty  ${Result}");
       return todoList;
 
 
