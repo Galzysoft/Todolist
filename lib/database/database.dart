@@ -3,6 +3,7 @@
 import 'package:sqflite/sqflite.dart';
 
 import 'package:todoapp/constants/constants_and_imports.dart';
+import 'package:todoapp/screens/todo/model/todo_model.dart';
 
 class Databases {
 //   i create  a variable for storing our open db instance
@@ -95,7 +96,7 @@ class Databases {
     }
   }
 
-  static Future<void> selctToDo() async {
+  static Future<List<TodoModel>> selctToDo() async {
     // var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable}");
   ///  select statement with a condition
   //   var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_title} = ? ",["onyeka"]);
@@ -105,26 +106,29 @@ class Databases {
 /// these is been used to perform search  querying of any appearance of  such values
 //     var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_title} LIKE ? ",["%o%"]);
     var Result = await DB!.rawQuery("SELECT * FROM ${Db_c.todoTable} WHERE ${Db_c.todo_description} LIKE ? OR ${Db_c.todo_title} LIKE ? ",["%good%","%london%"]);
-    if (Result.length == 0) {
-      print("empty ");
 
-      //
-      // List<graphRegionModel>? list = result.map((item) {
-      //   print(
-      //       "--------------------------------------------------------------");
-      //
-      //   print(
-      //       "value after insert ${graphRegionModel
-      //           .fromJson(item)
-      //           .region}");
-      //   print(
-      //       "--------------------------------------------------------------");
+    if (Result.length != 0) {
 
-      //   return graphRegionModel.fromJson(item);
-      // }).toList();
+/// since our result is a list of map then we need to loop through it and store its ind
+      /// individual element as an instance of  our todomodel and store it as a list
+      ///
+      // List<TodoModel> todoList=Result.map((json) => TodoModel.fromjson(json)).toList();
+      List<TodoModel> todoList=[];
+///or
+      for(int i=0;i<Result.length;i++){
+        Map mapresult=Result[i];
+        /// let serialize the  mapresult and store it in an instance and store it in  our todoList
+        todoList.add(TodoModel.fromjson(mapresult))  ;
+
+      }
+
+      print("Result is not empty  ${todoList[1].description}");
+      return todoList;
+
 
     } else {
-      print("Result is not empty  $Result");
+      print("Result is  empty");
+      return [];
     }
   }
 }
