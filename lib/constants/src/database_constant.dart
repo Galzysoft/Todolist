@@ -6,6 +6,7 @@ class Db_c{
   static const String todoTable="To_do";
  ///todo columns
 
+  static const String todo_id="id";
   static const String todo_title="title";
   static const String todo_description="description";
   static const String todo_date="date";
